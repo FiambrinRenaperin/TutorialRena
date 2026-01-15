@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIAMBRERIA RENAPER | Tutorial Full Data</title>
+    <style>
+        :root {
+            /* Telegram Dark Theme Colors */
+            --bg-app: #0e1621;
+            --bg-message-in: #182533;
+            --bg-message-out: #2b5278;
+            --text-primary: #f5f5f5;
+            --text-secondary: #7f8c9d;
+            --accent-blue: #5b9bd5; /* Color nombre bot */
+            --accent-red: #e17076; /* Color nombre usuario */
+            --accent-gold: #e6c200; /* Estilo Fiambreria */
+            
+            /* Web Page Colors */
+            --page-bg: #050505;
+            --code-bg: #1e1e1e;
+            --border-color: #333;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--page-bg);
+            color: #ddd;
+            margin: 0;
+            padding: 0;
+            line-height: 1.4;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-gold);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-family: 'Courier New', monospace;
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(230, 194, 0, 0.3);
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* CODE BLOCK STYLES */
+        .code-section {
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .code-header {
+            background-color: #252526;
+            padding: 8px 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: #ccc;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            margin: 0;
+            padding: 1.5rem;
+            overflow-x: auto;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* Syntax Highlighting */
+        .kw { color: #569cd6; } /* def, import, return */
+        .str { color: #ce9178; } /* Strings */
+        .func { color: #dcdcaa; } /* Functions */
+        .com { color: #6a9955; } /* Comments */
+        .key { color: #9cdcfe; } /* Dict keys */
+
+        /* TELEGRAM SIMULATION */
+        .telegram-phone {
+            max-width: 480px;
+            margin: 0 auto 3rem auto;
+            background-color: var(--bg-app);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #222;
+            box-shadow: 0 0 0 8px #111, 0 20px 40px rgba(0,0,0,0.7);
+        }
+
+        .chat-header {
+            background-color: #17212b;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #0f0f0f;
+        }
+
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: #000;
+        }
+
+        .chat-info h3 { margin: 0; font-size: 1rem; color: #fff; }
+        .chat-info span { font-size: 0.8rem; color: #6c7883; }
+
+        .chat-body {
+            padding: 15px;
+            /* Background pattern simulator */
+            background-image: radial-gradient(#151e27 1px, transparent 1px);
+            background-size: 20px 20px;
+            min-height: 400px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 8px;
+            flex-direction: column;
+        }
+
+        .message.user { align-items: flex-end; }
+        .message.bot { align-items: flex-start; }
+
+        .bubble {
+            max-width: 85%;
+            padding: 6px 10px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            font-size: 0.95rem;
+        }
+
+        .bubble.user { background-color: var(--bg-message-out); color: #fff; border-bottom-right-radius: 0; }
+        .bubble.bot { background-color: var(--bg-message-in); color: #fff; border-bottom-left-radius: 0; }
+
+        .msg-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .name-user { color: var(--accent-red); }
+        .name-bot { color: var(--accent-blue); }
+
+        .msg-text { white-space: pre-wrap; word-wrap: break-word; font-family: monospace; font-size: 0.85rem;}
+        
+        .msg-time {
+            float: right;
+            font-size: 0.7rem;
+            color: #7d8b99;
+            margin-top: 4px;
+            margin-left: 8px;
+        }
+
+        /* DNI Image Style */
+        .dni-placeholder {
+            width: 235px;
+            height: 286px;
+            background-color: #000;
+            border: 2px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-top: 5px;
+        }
+        .dni-placeholder span { color: #666; font-size: 0.8rem; }
+
+        /* LEGAL / FOOTER */
+        .legal-section {
+            border-top: 1px dashed #444;
+            padding-top: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+            padding-bottom: 3rem;
+        }
+
+        .info-basica {
+            font-family: 'Courier New', monospace;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .info-basica strong { color: var(--accent-gold); }
+
+        .disclaimer-alert {
+            background-color: #1a0505;
+            border: 1px solid #600;
+            color: #ff6b6b;
+            padding: 20px;
+            font-size: 0.9rem;
+            text-align: justify;
+            border-radius: 6px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>FIAMBRERIA RENAPER</h1>
+        <div class="subtitle">SCRIPT DE EXTRACCIÓN DE DATOS v3.5 (FULL)</div>
+    </header>
+
+    <div class="container">
+
+        <h3 style="color:var(--accent-gold)">>> CÓDIGO FUENTE (bot.py)</h3>
+        <div class="code-section">
+            <div class="code-header">
+                <span>Python 3.11</span>
+                <span>Copiar</span>
+            </div>
+            <pre><code><span class="kw">import</span> telebot
+<span class="kw">import</span> asyncio
+<span class="kw">from</span> playwright.async_api <span class="kw">import</span> async_playwright
+<span class="kw">import</span> random
+<span class="kw">import</span> string
+<span class="kw">import</span> requests
+<span class="kw">import</span> time
+<span class="kw">from</span> collections <span class="kw">import</span> deque
+<span class="kw">import</span> base64
+<span class="kw">from</span> io <span class="kw">import</span> BytesIO
+
+API_TOKEN = <span class="str">"7591727242:AAG_ppa82kVVJDmpPanJWnqx3X6fOFo24n8"</span>
+bot = telebot.TeleBot(API_TOKEN)
+
+OWNER_ID = 1658470522
+queue = deque()
+cooldown = {}
+
+RENAPER_API_KEY = <span class="str">"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTQyLCJyb2xlIjoyLCJpYXQiOjE3MzI4OTEyMTh9.ZJE93rqr5TzXlJ3Tz-On9Cj9AerPc9pxMNayONJ5BSo"</span>
+RENAPER_API_URL = <span class="str">"https://colmen-api.rgn.io/renaper/new"</span>
+
+<span class="kw">def</span> <span class="func">consultar_dni</span>(dni, gender):
+    headers = {
+        <span class="str">"Authorization"</span>: RENAPER_API_KEY,
+        <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span>
+    }
+    payload = {<span class="str">"dni"</span>: dni, <span class="str">"gender"</span>: gender}
+
+    <span class="kw">try</span>:
+        response = requests.post(RENAPER_API_URL, json=payload, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+
+        <span class="kw">return</span> {
+            <span class="key">"id_tramite_principal"</span>: data.get(<span class="str">"id_tramite_principal"</span>),
+            <span class="key">"id_tramite_tarjeta_reimpresa"</span>: data.get(<span class="str">"id_tramite_tarjeta_reimpresa"</span>),
+            <span class="key">"ejemplar"</span>: data.get(<span class="str">"ejemplar"</span>),
+            <span class="key">"fecha_vencimiento"</span>: data.get(<span class="str">"fecha_vencimiento"</span>),
+            <span class="key">"fecha_emision"</span>: data.get(<span class="str">"fecha_emision"</span>),
+            <span class="key">"apellido"</span>: data.get(<span class="str">"apellido"</span>),
+            <span class="key">"nombres"</span>: data.get(<span class="str">"nombres"</span>),
+            <span class="key">"fecha_nacimiento"</span>: data.get(<span class="str">"fecha_nacimiento"</span>),
+            <span class="key">"id_ciudadano"</span>: data.get(<span class="str">"id_ciudadano"</span>),
+            <span class="key">"cuil"</span>: data.get(<span class="str">"cuil"</span>),
+            <span class="key">"calle"</span>: data.get(<span class="str">"calle"</span>),
+            <span class="key">"numero"</span>: data.get(<span class="str">"numero"</span>),
+            <span class="key">"piso"</span>: data.get(<span class="str">"piso"</span>),
+            <span class="key">"departamento"</span>: data.get(<span class="str">"departamento"</span>),
+            <span class="key">"codigo_postal"</span>: data.get(<span class="str">"codigo_postal"</span>),
+            <span class="key">"barrio"</span>: data.get(<span class="str">"barrio"</span>),
+            <span class="key">"monoblock"</span>: data.get(<span class="str">"monoblock"</span>),
+            <span class="key">"ciudad"</span>: data.get(<span class="str">"ciudad"</span>),
+            <span class="key">"municipio"</span>: data.get(<span class="str">"municipio"</span>),
+            <span class="key">"provincia"</span>: data.get(<span class="str">"provincia"</span>),
+            <span class="key">"pais"</span>: data.get(<span class="str">"pais"</span>),
+            <span class="key">"codigo_fallecido"</span>: data.get(<span class="str">"codigo_fallecido"</span>),
+            <span class="key">"mensaje_fallecido"</span>: data.get(<span class="str">"mensaje_fallecido"</span>),
+            <span class="key">"origen_fallecido"</span>: data.get(<span class="str">"origen_fallecido"</span>),
+            <span class="key">"fecha_fallecido"</span>: data.get(<span class="str">"fecha_fallecido"</span>),
+            <span class="key">"foto"</span>: data.get(<span class="str">"foto"</span>),  <span class="com"># Foto en base64</span>
+        }
+    <span class="kw">except</span> requests.exceptions.RequestException <span class="kw">as</span> e:
+        <span class="kw">return</span> {<span class="str">"error"</span>: f<span class="str">"Error al conectar con la API del RENAPER: {e}"</span>}
+
+<span class="kw">@bot.message_handler</span>(commands=[<span class="str">'dni'</span>])
+<span class="kw">def</span> <span class="func">handle_dni</span>(message):
+    <span class="kw">try</span>:
+        args = message.text.split(<span class="str">" "</span>, 2)
+        <span class="kw">if</span> len(args) != 3:
+            bot.reply_to(message, <span class="str">"Uso incorrecto. El formato es:\n/dni DNI|Género (M/F)."</span>)
+            <span class="kw">return</span>
+
+        dni, gender = args[1], args[2].upper()
+        <span class="kw">if not</span> dni.isdigit():
+            bot.reply_to(message, <span class="str">"El DNI debe ser un número válido."</span>)
+            <span class="kw">return</span>
+        <span class="kw">if</span> gender <span class="kw">not in</span> [<span class="str">"M"</span>, <span class="str">"F"</span>]:
+            bot.reply_to(message, <span class="str">"El género debe ser 'M' (masculino) o 'F' (femenino)."</span>)
+            <span class="kw">return</span>
+
+        bot.reply_to(message, <span class="str">"Procesando consulta, por favor espera un momento..."</span>)
+        data = consultar_dni(dni, gender)
+
+        <span class="kw">if</span> <span class="str">"error"</span> <span class="kw">in</span> data:
+            bot.reply_to(message, data[<span class="str">"error"</span>])
+        <span class="kw">else</span>:
+            formatted_response = (
+                <span class="str">"Consulta de DNI | Resultados\n\n"</span>
+                f<span class="str">"📄 Nombre: {data.get('nombres', 'N/A')} {data.get('apellido', 'N/A')}\n"</span>
+                f<span class="str">"📂 Fecha de nacimiento: {data.get('fecha_nacimiento', 'N/A')}\n"</span>
+                f<span class="str">"🔛 CUIL: {data.get('cuil', 'N/A')}\n"</span>
+                f<span class="str">"🏠 Ciudad: {data.get('ciudad', 'N/A')}, {data.get('provincia', 'N/A')}\n"</span>
+                f<span class="str">"📆 Fecha de emisión: {data.get('fecha_emision', 'N/A')}\n"</span>
+                f<span class="str">"📆 Fecha de vencimiento: {data.get('fecha_vencimiento', 'N/A')}\n"</span>
+            )
+            bot.reply_to(message, formatted_response)
+
+            <span class="com"># Decodificar y enviar la foto</span>
+            <span class="kw">if</span> data.get(<span class="str">'foto'</span>):
+                <span class="kw">try</span>:
+                    <span class="com"># Decodificar la imagen desde base64</span>
+                    imagen_bytes = base64.b64decode(data[<span class="str">'foto'</span>])
+                    
+                    <span class="com"># Enviar la foto usando BytesIO para evitar guardar un archivo temporal</span>
+                    bot.send_photo(
+                        message.chat.id, 
+                        photo=BytesIO(imagen_bytes), 
+                    )
+                <span class="kw">except</span> Exception <span class="kw">as</span> e:
+                    bot.reply_to(message, f<span class="str">"No se pudo procesar la foto: {e}"</span>)
+            <span class="kw">else</span>:
+                bot.reply_to(message, <span class="str">"No se pudo obtener la foto del ciudadano."</span>)
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        bot.reply_to(message, f<span class="str">"Ocurrió un error: {e}"</span>)
+    
+    asyncio.run(process_queue())
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        print(e)
+        bot.reply_to(message, f<span class="str">"Ocurrió un error: {e}"</span>)
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    bot.infinity_polling()</code></pre>
+        </div>
+
+        <h3 style="color: #5b9bd5">>> LIVE PREVIEW (App Telegram)</h3>
+        
+        <div class="telegram-phone">
+            <div class="chat-header">
+                <div class="bot-avatar">🤖</div>
+                <div class="chat-info">
+                    <h3>FiambreriaBot</h3>
+                    <span>bot</span>
+                </div>
+            </div>
+
+            <div class="chat-body">
+                
+                <div class="message user">
+                    <div class="bubble user">
+                        <span class="msg-name name-user">FiambrinElAtrevidin</span>
+                        <div class="msg-text">/dni 43409435 M</div>
+                        <span class="msg-time">22:48</span>
+                    </div>
+                </div>
+
+                <div class="message bot">
+                    <div class="bubble bot">
+                        <span class="msg-name name-bot">FiambreriaBot</span>
+                        <div class="msg-text">🔪 Cortando fiambre fino... espere.</div>
+                        <span class="msg-time">22:48</span>
+                    </div>
+                </div>
+
+                <div class="message bot">
+                    <div class="bubble bot">
+                        <span class="msg-name name-bot">FiambreriaBot</span>
+                        <div class="msg-text">🥓 <b>FIAMBRERIA RENAPER | REPORTE</b>
+──────────────────────
+<b>DATOS PERSONALES:</b>
+APELLIDO: RAMOS
+NOMBRES: AGUSTIN ALEJANDRO
+DNI: 43409435
+CUIL: 20-43409435-2
+NACIMIENTO: 12 JULIO 2001
+ID CIUDADANO: 43409435
+
+<b>CREDENCIAL:</b>
+ID TRAMITE PPAL: 007402061927336
+ID REIMPRESA: N/A
+EJEMPLAR: B
+EMISION: 14/08/2021
+VENCIMIENTO: 12/07/2036
+
+<b>DOMICILIO:</b>
+CALLE: Calle 844
+NUMERO: 1250
+PISO: -
+DEPTO: -
+BARRIO: Solano
+MONOBLOCK: N/A
+CP: 1881
+CIUDAD: San Francisco Solano
+MUNICIPIO: Quilmes
+PROVINCIA: Buenos Aires (Pcia)
+PAIS: Argentina
+
+<b>ESTADO:</b>
+FALLECIDO: NO (NULL)
+CAUSA PENAL: SI X ROBO
+ESTADO: PROFUGO
+──────────────────────</div>
+                        <span class="msg-time">22:48</span>
+                    </div>
+                </div>
+
+                <div class="message bot">
+                    <div class="bubble bot">
+                        <span class="msg-name name-bot">FiambreriaBot</span>
+                        <div class="dni-placeholder">
+                            <div style="font-size:3rem;">👤</div>
+                            <span>DNI.png</span>
+                            <span>235 x 286</span>
+                        </div>
+                        <div class="msg-text" style="margin-top:5px">📸 Archivo generado correctamente.</div>
+                        <span class="msg-time">22:49</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="legal-section">
+            <div class="info-basica">
+                <p>Es <strong>INFORMATICA BASICA</strong>.</p>
+                <p>De hecho este código fuente es "tomado prestado" de un amigo que le gusta cortar mucho fiambre.</p>
+                <p>Perdón si dejo de andar el original, Y si cambia la key api bot Uwu.</p>
+            </div>
+
+            <div class="disclaimer-alert">
+                <strong>⚠️ AVISO LEGAL DE CARÁCTER INFORMATIVO:</strong><br><br>
+                El responsable de esta pagina no se hace responsable del mal uso a la información pública dada en este informe ravero. Es para que dejen de asustarte con gente que lo único que hizo fue comprar una base de datos <strong>FILTRADA por HACKERS de VÉRDAD</strong> y escribir un código de 200-500 líneas (La IA lo hace en 2segs).
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
